@@ -49,13 +49,13 @@ app.get("/add", (req, res) => {
     res.render("add", {
         //Tömmer felmeddelanden när sidan laddas första gången.
         coursecodeError: "",
-        coursenameError: "",   
+        coursenameError: "",
         syllabusError: "",
         progressionError: ""
     });
 });
 
-app.post("/add", (req, res) => {
+app.post("/add", async (req, res) => {
 
     //Hämtar värde från input
     const coursecode = req.body.coursecode;
@@ -72,7 +72,7 @@ app.post("/add", (req, res) => {
     //Validering av input
 
     //Minst fem tecken. Lärosäten har olika längd på kurskoder.
-    if (coursecode.length < 6) {
+    if (coursecode.length < 5) {
         coursecodeError = "Fyll i kurskod (minst 5 tecken)";
     }
     if (!coursename) {
@@ -86,6 +86,28 @@ app.post("/add", (req, res) => {
         progressionError = "Fyll i kursens progression";
     }
 
+    
+    //Kontrollerar om kurskod eller kursnamn redan finns i databasen
+    const checkCode = await client.query(
+        "SELECT * FROM courses WHERE coursecode ILIKE $1",
+        [coursecode]
+    );
+
+    if (checkCode.rows.length > 0) {
+        coursecodeError = "Kurskoden finns redan inlagd."
+    }
+    
+
+    const checkName = await client.query(
+        "SELECT * FROM courses WHERE coursename ILIKE $1",
+        [coursename]
+        );
+
+    if (checkName.rows.length > 0) {
+        coursenameError = "Kursnamnet finns redan inlagt."
+    }
+
+
     //Skriv ut felmeddelande
     if (coursecodeError || coursenameError || syllabusError || progressionError) {
         return res.render("add", {
@@ -97,9 +119,20 @@ app.post("/add", (req, res) => {
         });
     }
 
+    try {
+        const result = await client.query(
+            //Sätter in värden i databasen med parametriserad fråga för att förhindra SQL-injection
+            "INSERT INTO courses(coursecode, coursename, syllabus, progression) VALUES($1, $2, $3, $4)",
+            [coursecode, coursename, syllabus, progression]
 
-    //Om allt är OK skickas användaren tillbaka till startsidan
-    res.redirect("/");
+
+        );
+        //Om allt är OK skickas användaren tillbaka till startsidan
+        res.redirect("/");
+
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 
