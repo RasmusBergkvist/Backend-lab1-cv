@@ -1,11 +1,11 @@
-const {Client} = require("pg");
+const { Client } = require("pg");
 require('dotenv').config();
 
 //Hämtar express
 const express = require("express");
 
 //Anropar applikationen
-const app =  express();
+const app = express();
 
 //EJs som view engine
 app.set("view engine", "ejs");
@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 //Gör att formulärsdata kan läsas in
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 //Anslutning till databas
 const client = new Client({
@@ -46,7 +46,60 @@ app.get("/", (req, res) => {
 
 
 app.get("/add", (req, res) => {
-    res.render("add")
+    res.render("add", {
+        //Tömmer felmeddelanden när sidan laddas första gången.
+        coursecodeError: "",
+        coursenameError: "",   
+        syllabusError: "",
+        progressionError: ""
+    });
+});
+
+app.post("/add", (req, res) => {
+
+    //Hämtar värde från input
+    const coursecode = req.body.coursecode;
+    const coursename = req.body.coursename;
+    const syllabus = req.body.syllabus;
+    const progression = req.body.progression;
+
+    //Rensar felmeddelanden
+    let coursecodeError = "";
+    let coursenameError = "";
+    let syllabusError = "";
+    let progressionError = "";
+
+    //Validering av input
+
+    //Minst fem tecken. Lärosäten har olika längd på kurskoder.
+    if (coursecode.length < 6) {
+        coursecodeError = "Fyll i kurskod (minst 5 tecken)";
+    }
+    if (!coursename) {
+        coursenameError = "Fyll i kursnamn";
+    }
+    if (!syllabus) {
+        syllabusError = "Fylls i url till kursplan";
+    }
+
+    if (!progression) {
+        progressionError = "Fyll i kursens progression";
+    }
+
+    //Skriv ut felmeddelande
+    if (coursecodeError || coursenameError || syllabusError || progressionError) {
+        return res.render("add", {
+            coursecodeError,
+            coursenameError,
+            syllabusError,
+            progressionError
+
+        });
+    }
+
+
+    //Om allt är OK skickas användaren tillbaka till startsidan
+    res.redirect("/");
 });
 
 
