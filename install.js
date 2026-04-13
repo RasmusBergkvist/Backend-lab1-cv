@@ -32,10 +32,12 @@ async function createTable() {
     try {
         //Väntar på att SQL-tabell skapas
         const res = await client.query(`
+            DROP TABLE IF EXISTS courese;
             CREATE TABLE IF NOT EXISTS courses (
             id SERIAL PRIMARY KEY,
             coursecode VARCHAR(10) UNIQUE,
-            coursename TEXT,
+            coursename VARCHAR(50),
+            syllabus TEXT,
             progression VARCHAR(5),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
