@@ -10,7 +10,7 @@
 
  body {
     max-width: 960px;
-    background-color: rgb(0, 4, 80);
+    background-color: rgb(45, 45, 46);
     color: rgb(229, 229, 202);
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
@@ -46,6 +46,12 @@ cursor: pointer;
 
 
 .error {
-    color: rgb(173, 100, 100); ;
+    color: rgb(240, 58, 58); ;
     font-weight: 700;
+}
+
+article {
+   padding: 1rem;
+   margin-block: 0.8rem;
+   border: 1px solid rgb(170, 170, 173);;
 }

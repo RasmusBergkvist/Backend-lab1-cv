@@ -40,8 +40,16 @@ client.connect((error) => {
 
 
 //Route till startsidan som tar emot en förfrågan (req) och skickar ett svar (res) och rendrar en vyn Index
-app.get("/", (req, res) => {
-    res.render("index")
+app.get("/", async (req, res) => {
+    try {
+        // Väntar på att databasen hämtar inlagd data
+        const result = await client.query("SELECT * FROM courses");
+    res.render("index", {courses: result.rows});
+
+    } catch(error) {
+        console.error(error)
+
+    }
 });
 
 
