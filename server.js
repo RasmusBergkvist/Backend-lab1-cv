@@ -43,25 +43,23 @@ client.connect((error) => {
 app.get("/", async (req, res) => {
     try {
         // Väntar på att databasen hämtar inlagd data
-        const result = await client.query("SELECT * FROM courses");
-    res.render("index", {courses: result.rows});
+        const result = await client.query("SELECT * FROM courses ORDER BY coursecode");
+        res.render("index", { courses: result.rows });
 
-    } catch(error) {
+    } catch (error) {
         console.error(error)
 
     }
 });
 
 
+
+
 app.get("/add", (req, res) => {
-    res.render("add", {
-        //Tömmer felmeddelanden när sidan laddas första gången.
-        coursecodeError: "",
-        coursenameError: "",
-        syllabusError: "",
-        progressionError: ""
-    });
+    res.render("add") 
 });
+
+
 
 app.post("/add", async (req, res) => {
 
@@ -78,56 +76,60 @@ app.post("/add", async (req, res) => {
     let progressionError = "";
 
     //Validering av input
+    try {
+        //Minst fem tecken. Lärosäten har olika längd på kurskoder.
+        if (coursecode.length < 5) {
+            coursecodeError = "Fyll i kurskod (minst 5 tecken)";
+        }
+        if (!coursename) {
+            coursenameError = "Fyll i kursnamn";
+        }
+        if (!syllabus) {
+            syllabusError = "Fylls i url till kursplan";
+        }
 
-    //Minst fem tecken. Lärosäten har olika längd på kurskoder.
-    if (coursecode.length < 5) {
-        coursecodeError = "Fyll i kurskod (minst 5 tecken)";
-    }
-    if (!coursename) {
-        coursenameError = "Fyll i kursnamn";
-    }
-    if (!syllabus) {
-        syllabusError = "Fylls i url till kursplan";
-    }
+        if (!progression) {
+            progressionError = "Fyll i kursens progression";
+        }
 
-    if (!progression) {
-        progressionError = "Fyll i kursens progression";
-    }
 
-    
-    //Kontrollerar om kurskod eller kursnamn redan finns i databasen
-    const checkCode = await client.query(
-        "SELECT * FROM courses WHERE coursecode ILIKE $1",
-        [coursecode]
-    );
-
-    if (checkCode.rows.length > 0) {
-        coursecodeError = "Kurskoden finns redan inlagd."
-    }
-    
-
-    const checkName = await client.query(
-        "SELECT * FROM courses WHERE coursename ILIKE $1",
-        [coursename]
+        //Kontrollerar om kurskod eller kursnamn redan finns i databasen
+        const checkCode = await client.query(
+            "SELECT * FROM courses WHERE coursecode ILIKE $1",
+            [coursecode]
         );
 
-    if (checkName.rows.length > 0) {
-        coursenameError = "Kursnamnet finns redan inlagt."
-    }
+        if (checkCode.rows.length > 0) {
+            coursecodeError = "Kurskoden finns redan inlagd."
+        }
 
 
-    //Skriv ut felmeddelande
-    if (coursecodeError || coursenameError || syllabusError || progressionError) {
-        return res.render("add", {
-            coursecodeError,
-            coursenameError,
-            syllabusError,
-            progressionError
+        const checkName = await client.query(
+            "SELECT * FROM courses WHERE coursename ILIKE $1",
+            [coursename]
+        );
 
-        });
-    }
+        if (checkName.rows.length > 0) {
+            coursenameError = "Kursnamnet finns redan inlagt."
+        }
 
-    try {
+
+        //Vid fel visas felmeddelanden och formulärfälten behåller sina värden
+        if (coursecodeError || coursenameError || syllabusError || progressionError) {
+            return res.render("add", {
+                coursecode,
+                coursename,
+                syllabus,
+                progression,
+                coursecodeError,
+                coursenameError,
+                syllabusError,
+                progressionError
+
+            });
+        }
+
+
         const result = await client.query(
             //Sätter in värden i databasen med parametriserad fråga för att förhindra SQL-injection
             "INSERT INTO courses(coursecode, coursename, syllabus, progression) VALUES($1, $2, $3, $4)",
@@ -142,6 +144,144 @@ app.post("/add", async (req, res) => {
         console.error(error);
     }
 });
+
+
+
+
+
+
+//Redigera kurser från databasen
+app.get("/edit/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        // Väntar på att databasen hämtar inlagd data
+        const result = await client.query(
+            "SELECT * FROM courses WHERE id= $1", [id]
+        );
+        //Renderar vyn edit med värden från tabellens raden för hämtad kurs.
+        res.render("edit", {
+            course: result.rows[0]
+        });
+
+    } catch (error) {
+        console.error(error)
+
+    }
+});
+
+
+//Posta redigeringar
+
+app.post("/edit/:id", async (req, res) => {
+    const id = req.params.id;
+
+    //Hämtar värde från input
+    const coursecode = req.body.coursecode;
+    const coursename = req.body.coursename;
+    const syllabus = req.body.syllabus;
+    const progression = req.body.progression;
+
+
+    //Rensar felmeddelanden
+    let coursecodeError = "";
+    let coursenameError = "";
+    let syllabusError = "";
+    let progressionError = "";
+
+    //Validering av input
+    try {
+        //Minst fem tecken. Lärosäten har olika längd på kurskoder.
+        if (coursecode.length < 5) {
+            coursecodeError = "Fyll i kurskod (minst 5 tecken)";
+        }
+        if (!coursename) {
+            coursenameError = "Fyll i kursnamn";
+        }
+        if (!syllabus) {
+            syllabusError = "Fylls i url till kursplan";
+        }
+
+        if (!progression) {
+            progressionError = "Fyll i kursens progression";
+        }
+
+
+        //Kontrollerar om kurskod redan finns i databasen, men jämför inte mot sitt egna id.
+        const checkCode = await client.query(
+            "SELECT * FROM courses WHERE coursecode ILIKE $1  AND id != $2",
+            [coursecode, id]
+        );
+
+        if (checkCode.rows.length > 0) {
+            coursecodeError = "Kurskoden finns redan inlagd."
+        }
+
+
+        //Kontrollerar om kurskod eller kursnamn redan finns i databasen, men jämför inte mot sitt egna id.
+        const checkName = await client.query(
+            "SELECT * FROM courses WHERE coursename ILIKE $1 AND id != $2",
+            [coursename, id]
+        );
+
+        if (checkName.rows.length > 0) {
+            coursenameError = "Kursnamnet finns redan inlagt."
+        }
+
+
+        // Vid fel visas formuläret igen med felmeddelanden och befintliga värden
+        if (coursecodeError || coursenameError || syllabusError || progressionError) {
+            return res.render("edit", {
+                course: {
+                    id,
+                    coursecode,
+                    coursename,
+                    syllabus,
+                    progression
+                },
+                coursecodeError,
+                coursenameError,
+                syllabusError,
+                progressionError
+
+            });
+        }
+
+
+        const result = await client.query(
+            //Sätter in värden i databasen med parametriserad fråga för att förhindra SQL-injection
+            "UPDATE courses SET coursecode= $1, coursename = $2, syllabus = $3, progression = $4 WHERE id = $5",
+            [coursecode, coursename, syllabus, progression, id]
+
+
+        );
+        //Om allt är OK skickas användaren tillbaka till startsidan
+        res.redirect("/");
+
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+
+
+//Raderar kurser från databasen
+app.get("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const result = await client.query(
+            // Parametriserad fråga för att förhindra SQL-injection
+            "DELETE FROM courses WHERE id = $1", [id]
+        );
+        //Om allt är OK skickas användaren till startsidan vid raderad kurs.
+        res.redirect("/");
+
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 
 
 //Lyssnar och startar applikationen på porten

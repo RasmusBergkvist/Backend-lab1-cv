@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>CV</title>
+</head>
+
+<body>
+    <header>
+        <h1>CV</h1>
+    </header>
+    <main>
+        <h2>Redigera kurs</h2>
+        <p>Här kan du göra redigera i kursinformationen</p>
+            <form method="post">
+                <label for="coursecode">Kurskod:</label>
+                <span class="error">
+                    <%= locals.coursecodeError %>
+                </span>
+                <input type="text" id="coursecode" name="coursecode" value="<%= course.coursecode %>" placeholder="Ex. DT207G">
+
+                <label for="coursename">Kursnamn:</label>
+                <span class="error">
+                    <%= locals.coursenameError %>
+                </span>
+                <input type="text" id="coursename" name="coursename" value="<%= course.coursename %>" placeholder="Ex. Backend-baserad webbutveckling">
+
+                <label for="syllabus">Kursplan:</label>
+                <span class="error">
+                    <%= locals.syllabusError %>
+                </span>
+                <input type="text" id="syllabus" name="syllabus" value="<%= course.syllabus %>" placeholder="Url till kursplan">
+
+                <label for="progression">Progression:</label>
+                <span class="error">
+                    <%= locals.progressionError %>
+                </span>
+                <input type="text" id="progression" name="progression" value="<%= course.progression %>" placeholder="Ex. A, B eller C">
+
+                <input type="submit" class="button" value="Redigera kurs">
+            </form>
+    </main>
+</body>
+
+</html>

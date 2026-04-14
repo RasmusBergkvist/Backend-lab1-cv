@@ -46,7 +46,7 @@ cursor: pointer;
 
 
 .error {
-    color: rgb(240, 58, 58); ;
+    color: rgb(221, 61, 61); ;
     font-weight: 700;
 }
 
@@ -54,4 +54,51 @@ article {
    padding: 1rem;
    margin-block: 0.8rem;
    border: 1px solid rgb(170, 170, 173);;
+}
+
+.article-links {
+   display: flex;
+   justify-content: space-between;
+}
+
+.right-links {
+   display: flex;
+   gap: 1rem;
+}
+
+.syllabus, .delete, .edit {
+   display: inline-block;
+   text-decoration: none;
+   margin-top: 1rem;
+   padding: 6px 10px;
+   border-radius: 10px;
+   border: 0px;
+}
+
+.syllabus {
+     background-color: rgb(229, 229, 202);
+     color: black;
+}
+
+.syllabus:hover {
+   background-color: rgb(162, 162, 143);
+   color: white;
+}
+
+.delete {
+   background-color:  rgb(221, 61, 61);
+   color: white;
+}
+
+.delete:hover {
+   background-color: rgb(170, 46, 46);
+}
+
+.edit {
+   background-color: rgb(157, 170, 228);
+   color: white;
+}
+
+.edit:hover {
+    background-color: rgb(121, 132, 177);;
 }

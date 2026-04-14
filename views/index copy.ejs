@@ -28,14 +28,10 @@
                     </h3>
                     <p>Progression: <%= course.progression %>
                     </p>
-                    <div class="article-links">
-                        <a class="syllabus" href="<%= course.syllabus %>" target="_blank"
-                            rel="noopener noreferrer">Kursplan för <%= course.coursecode %></a>
-                        <div class="right-links">
-                            <a class="delete" href="/delete/<%=course.id %>">Radera kurs</a>
-                            <a class="edit" href="/edit/<%=course.id %>">Redigera kurs</a>
-                        </div>
-                    </div>
+                    <span><a class="syllabus" href="<%= course.syllabus %>" target="_blank"
+                            rel="noopener noreferrer">Kursplan för <%= course.coursecode %></a></span>
+                    <span><a class="delete" href="/delete/<%=course.id %>">Radera kurs</a>
+                        <a class="edit" href="/edit/<%=course.id %>">Radera kurs</a></span>
                 </article>
 
 

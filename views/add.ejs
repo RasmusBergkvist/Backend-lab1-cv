@@ -13,20 +13,20 @@
         <h1>Lägg till kurser</h1>
         <form method="post">
             <label for="coursecode">Kurskod:</label>
-            <span class="error"><%= coursecodeError %></span>
-            <input type="text" id="coursecode" name="coursecode" placeholder="Ex. DT207G">
+            <span class="error"><%= locals.coursecodeError %></span>
+            <input type="text" id="coursecode" name="coursecode" value="<%= locals.coursecode %>" placeholder="Ex. DT207G">
 
             <label for="coursename">Kursnamn:</label>
-            <span class="error"><%= coursenameError %></span>
-            <input type="text" id="coursename" name="coursename" placeholder="Ex. Backend-baserad webbutveckling">
+            <span class="error"><%= locals.coursenameError %></span>
+            <input type="text" id="coursename" name="coursename" value="<%= locals.coursename %>" placeholder="Ex. Backend-baserad webbutveckling">
 
             <label for="syllabus">Kursplan:</label>
-            <span class="error"><%= syllabusError %></span>
-            <input type="text" id="syllabus" name="syllabus" placeholder="Url till kursplan">
+            <span class="error"><%= locals.syllabusError %></span>
+            <input type="text" id="syllabus" name="syllabus" value="<%= locals.syllabus %>" placeholder="Url till kursplan">
 
             <label for="progression">Progression:</label>
-            <span class="error"><%= progressionError %></span>
-            <input type="text" id="progression" name="progression" placeholder="Ex. A, B eller C">
+            <span class="error"><%= locals.progressionError %></span>
+            <input type="text" id="progression" name="progression" value="<%= locals.progression %>"   placeholder="Ex. A, B eller C">
 
             <input type="submit" class="button" value="Lägg till kurs">
         </form>
