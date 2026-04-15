@@ -9,34 +9,53 @@
 </head>
 
 <body>
-    <main>
-        <h2>Lägg till kurser</h2>
 
-        <!-- Felmeddelande visas om kursen inte kan läggas till  -->            
-        <% if (locals.postError) { %>
-        <span class="error"><%= postError %></span>
-        <% } %>
+ <div class="container">
+        <%- include("partials/header") %>
+            <main>
+                <h2>Lägg till kurser</h2>
 
-        <form method="post">
-            <label for="coursecode">Kurskod:</label>
-            <span class="error"><%= locals.coursecodeError %></span>
-            <input type="text" id="coursecode" name="coursecode" value="<%= locals.coursecode %>" placeholder="Ex. DT207G">
+                <!-- Felmeddelande visas om kursen inte kan läggas till  -->
+                <% if (locals.postError) { %>
+                    <span class="error">
+                        <%= postError %>
+                    </span>
+                    <% } %>
 
-            <label for="coursename">Kursnamn:</label>
-            <span class="error"><%= locals.coursenameError %></span>
-            <input type="text" id="coursename" name="coursename" value="<%= locals.coursename %>" placeholder="Ex. Backend-baserad webbutveckling">
+                        <form method="post">
+                            <label for="coursecode">Kurskod:</label>
+                            <span class="error">
+                                <%= locals.coursecodeError %>
+                            </span>
+                            <input type="text" id="coursecode" name="coursecode" value="<%= locals.coursecode %>"
+                                placeholder="Ex. DT207G">
 
-            <label for="syllabus">Kursplan:</label>
-            <span class="error"><%= locals.syllabusError %></span>
-            <input type="text" id="syllabus" name="syllabus" value="<%= locals.syllabus %>" placeholder="Url till kursplan">
+                            <label for="coursename">Kursnamn:</label>
+                            <span class="error">
+                                <%= locals.coursenameError %>
+                            </span>
+                            <input type="text" id="coursename" name="coursename" value="<%= locals.coursename %>"
+                                placeholder="Ex. Backend-baserad webbutveckling">
 
-            <label for="progression">Progression:</label>
-            <span class="error"><%= locals.progressionError %></span>
-            <input type="text" id="progression" name="progression" value="<%= locals.progression %>"   placeholder="Ex. A, B eller C">
+                            <label for="syllabus">Kursplan:</label>
+                            <span class="error">
+                                <%= locals.syllabusError %>
+                            </span>
+                            <input type="text" id="syllabus" name="syllabus" value="<%= locals.syllabus %>"
+                                placeholder="Url till kursplan">
 
-            <input type="submit" class="button" value="Lägg till kurs">
-        </form>
-    </main>
+                            <label for="progression">Progression:</label>
+                            <span class="error">
+                                <%= locals.progressionError %>
+                            </span>
+                            <input type="text" id="progression" name="progression" value="<%= locals.progression %>"
+                                placeholder="Ex. A, B eller C">
+
+                            <input type="submit" class="button" value="Lägg till kurs">
+                        </form>
+            </main>
+    </div>
+    <script src="/js/main.js" defer></script>
 </body>
 
 </html>

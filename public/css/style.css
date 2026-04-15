@@ -4,18 +4,83 @@
     box-sizing: border-box;
  }
 
+
  p {
     font-size: 1rem;
  }
 
  body {
-    max-width: 960px;
-    background-color: rgb(45, 45, 46);
+    background-color: rgb(91, 89, 89);
     color: rgb(229, 229, 202);
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
-    margin: 0 auto;
  }
+
+ body, html {
+   overflow-x: hidden;
+ }
+
+
+ .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 960px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding-inline: 2rem;
+    background-color: rgb(45, 45, 46);
+    box-shadow: 0 0 8px rgb(45, 45, 45);
+
+
+ }
+
+ .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.7rem;
+    color: rgb(45, 45, 46);
+    background-color: rgb(229, 229, 202);
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    box-shadow: 0 0 8px rgb(254, 254, 219);
+ }
+
+ .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 1.5rem;
+
+ }
+
+ nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+ }
+
+ .nav-link {
+    text-decoration: none;
+    background-color: rgb(229, 229, 202);
+    color: black;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 0px;
+ }
+
+ .nav-link:hover {
+    background-color: rgb(162, 162, 143);
+    color: white;
+
+ }
+
+ .mobile-menu-button {
+    display: none;
+ }
+
 
  input[type="text"] {
     display: block;
@@ -31,74 +96,156 @@
  }
 
  .button {
-padding: 10px 16px;
-background-color: rgb(157, 170, 228);
-color: white;
-font-size: 1rem;
-border-radius: 10px;
-border: 0px;
-cursor: pointer;
-}
+    padding: 10px 16px;
+    background-color: rgb(157, 170, 228);
+    color: white;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 0px;
+    cursor: pointer;
+ }
 
-.button:hover {
-    background-color: rgb(121, 132, 177);;
-}
+ .button:hover {
+    background-color: rgb(121, 132, 177);
+    ;
+ }
 
 
-.error {
-    color: rgb(221, 61, 61); ;
+ .error {
+    color: rgb(221, 61, 61);
+    ;
     font-weight: 700;
-}
+ }
 
-article {
-   padding: 1rem;
-   margin-block: 0.8rem;
-   border: 1px solid rgb(170, 170, 173);;
-}
+ article {
+    padding: 1rem;
+    margin-block: 0.8rem;
+    border: 1px solid rgb(170, 170, 173);
+    ;
+ }
 
-.article-links {
-   display: flex;
-   justify-content: space-between;
-}
+ .article-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+ }
 
-.right-links {
-   display: flex;
-   gap: 1rem;
-}
+ .right-links {
+    display: flex;
+    gap: 1rem;
+ }
 
-.syllabus, .delete, .edit {
-   display: inline-block;
-   text-decoration: none;
-   margin-top: 1rem;
-   padding: 6px 10px;
-   border-radius: 10px;
-   border: 0px;
-}
+ .syllabus,
+ .delete,
+ .edit {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 1rem;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 0px;
+ }
 
-.syllabus {
-     background-color: rgb(229, 229, 202);
-     color: black;
-}
+ .syllabus {
+    background-color: rgb(229, 229, 202);
+    color: black;
+ }
 
-.syllabus:hover {
-   background-color: rgb(162, 162, 143);
-   color: white;
-}
+ .syllabus:hover {
+    background-color: rgb(162, 162, 143);
+    color: white;
+ }
 
-.delete {
-   background-color:  rgb(221, 61, 61);
-   color: white;
-}
+ .delete {
+    background-color: rgb(221, 61, 61);
+    color: white;
+ }
 
-.delete:hover {
-   background-color: rgb(170, 46, 46);
-}
+ .delete:hover {
+    background-color: rgb(170, 46, 46);
+ }
 
-.edit {
-   background-color: rgb(157, 170, 228);
-   color: white;
-}
+ .edit {
+    background-color: rgb(157, 170, 228);
+    color: white;
+ }
 
-.edit:hover {
-    background-color: rgb(121, 132, 177);;
-}
+ .edit:hover {
+    background-color: rgb(121, 132, 177);
+    ;
+ }
+
+ @media screen and (max-width: 600px) {
+    .container {
+       display: flex;
+       flex-direction: column;
+       width: 100%;
+       padding: 1rem;
+    }
+
+    .article-links {
+       display: block;
+    }
+
+    .right-links {
+       margin-top: 1rem;
+       justify-content: space-between;
+    }
+
+
+    .mobile-menu-button {
+       display: block;
+       position: relative;
+       font-size: 2rem;
+       margin-right: 1rem;
+       width: 50px;
+       height: 50px;
+       color: rgb(45, 45, 46);
+       background-color: rgb(229, 229, 202);
+       border: none;
+       border-radius: 10px;
+       z-index: 999;
+    }
+
+    .menu {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       position: absolute;
+       height: 100vh;
+       top: 0;
+       right: 0;
+       bottom: 0;
+       width: 250px;
+       z-index: 990;
+      background-color: rgb(70, 70, 70);
+
+
+       transform: translateX(100%);
+       transition: transform 0.45s ease-out;
+    }
+
+    .menu.active {
+       transform: translateX(0);
+
+    }
+
+    ul {
+       display: flex;
+       flex-direction: column;
+       margin-top: 150px;
+
+    }
+
+    li {
+       margin-bottom: 1rem;
+    }
+
+    .nav-link {
+       display: block;
+       text-align: left;
+
+    }
+
+
+ }

@@ -338,4 +338,4 @@ app.get("/delete/:id", async (req, res) => {
 //Lyssnar och startar applikationen på porten
 app.listen(process.env.PORT, () => {
     console.log("Servern startade på port: " + process.env.PORT);
-})
+});
