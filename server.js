@@ -42,25 +42,34 @@ client.connect((error) => {
 //Route till startsidan som tar emot en förfrågan (req) och skickar ett svar (res) och rendrar en vyn Index
 app.get("/", async (req, res) => {
     try {
+
         // Väntar på att databasen hämtar inlagd data
         const result = await client.query("SELECT * FROM courses ORDER BY coursecode");
         res.render("index", { courses: result.rows });
 
+        //Vid fel skapas en tom array för att undvika crash med forEach-loopen, samt skriver ut meddelande till användaren.
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        res.render("index", {
+            courses: [],
+            databaseError: "Kurserna kan inte hämtas just nu, försök igen senare"
+
+        }
+
+        )
 
     }
 });
 
 
 
-
+//Route till Lägg till kurs som renderar vyn Add.
 app.get("/add", (req, res) => {
-    res.render("add") 
+    res.render("add")
 });
 
 
-
+//Posta och valderingen av kursen uppgifter.
 app.post("/add", async (req, res) => {
 
     //Hämtar värde från input
@@ -129,7 +138,6 @@ app.post("/add", async (req, res) => {
             });
         }
 
-
         const result = await client.query(
             //Sätter in värden i databasen med parametriserad fråga för att förhindra SQL-injection
             "INSERT INTO courses(coursecode, coursename, syllabus, progression) VALUES($1, $2, $3, $4)",
@@ -142,12 +150,22 @@ app.post("/add", async (req, res) => {
 
     } catch (error) {
         console.error(error);
+        //Vid fel skriver meddelande ut till användaren. Värden i formulärsfältet står kvar. 
+        res.render("add", {
+            coursecode,
+            coursename,
+            syllabus,
+            progression,
+            postError: "Det går inte att lägga till kursen just nu, försök igen senare."
+
+        });
     }
 });
 
-
-
-
+//Omdirigerar användaren till startsidan om id saknas i URL:en för att förhindra felmeddelanden.
+app.get("/edit", (req, res) => {
+    res.redirect("/")
+});
 
 
 //Redigera kurser från databasen
@@ -159,19 +177,30 @@ app.get("/edit/:id", async (req, res) => {
         const result = await client.query(
             "SELECT * FROM courses WHERE id= $1", [id]
         );
+
+        //Om det inte finns något att redigera skicka användaren tillbaka till startsidan.
+        if(result.rows.length === 0) {
+            return res.redirect("/");
+        }
+
         //Renderar vyn edit med värden från tabellens raden för hämtad kurs.
         res.render("edit", {
             course: result.rows[0]
         });
 
     } catch (error) {
-        console.error(error)
+        console.error(error);
+        //Vid fel skapas en tomt objekt för att undvika crash med ReferenceError om data inte kunde hämtas, samt felmeddelande skrivs ut till användaren.
+        res.render("edit", {
+            course: {},
+            getDataError: " Det gick inte att hämta uppgifterna om kusen just nu, försök igen senare."
+        });
 
     }
 });
 
 
-//Posta redigeringar
+//Posta och validerar ändringar av kursens uppgifter
 
 app.post("/edit/:id", async (req, res) => {
     const id = req.params.id;
@@ -258,8 +287,23 @@ app.post("/edit/:id", async (req, res) => {
         //Om allt är OK skickas användaren tillbaka till startsidan
         res.redirect("/");
 
+        //Vid fel finns värden kvar i formulärsfältet, samt felmeddelande skrivs ut till användaren.
     } catch (error) {
         console.error(error);
+        res.render("edit", {
+            course: {
+                id,
+                coursecode,
+                coursename,
+                syllabus,
+                progression
+            },
+            updateError: "Det gick inte att uppdatera uppgifterna just nu, försök igen senare."
+
+        });
+
+
+
     }
 });
 
@@ -278,7 +322,14 @@ app.get("/delete/:id", async (req, res) => {
         res.redirect("/");
 
     } catch (error) {
+        //Vid fel hämtas kurserna på nytt och skrivs ut tillsammans med felmeddelande.
+        const result = await client.query("SELECT * FROM courses ORDER BY coursecode");
+
         console.error(error);
+        res.render("index", {
+            courses: result.rows,
+            deleteError: "Det gick inte att ta bort kursen, försök igen senare."
+        });
     }
 });
 

@@ -4,13 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>CV</title>
 </head>
 
 <body>
     <main>
-        <h1>Lägg till kurser</h1>
+        <h2>Lägg till kurser</h2>
+
+        <!-- Felmeddelande visas om kursen inte kan läggas till  -->            
+        <% if (locals.postError) { %>
+        <span class="error"><%= postError %></span>
+        <% } %>
+
         <form method="post">
             <label for="coursecode">Kurskod:</label>
             <span class="error"><%= locals.coursecodeError %></span>

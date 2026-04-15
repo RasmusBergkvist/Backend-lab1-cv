@@ -14,7 +14,19 @@
     </header>
     <main>
         <h2>Redigera kurs</h2>
-        <p>Här kan du göra redigera i kursinformationen</p>
+        
+        <!-- Felmeddelande visas om kurseninformationen inte kan hämtas från databasen  -->            
+        <% if (locals.getDataError) { %>
+        <span class="error"><%= getDataError %></span>
+        <% } %>
+
+        <!-- Felmeddelande visas om kurseninformationen inte kan postas  -->            
+        <% if (locals.updateError) { %>
+        <span class="error"><%= updateError %></span>
+        <% } %>
+
+        <p>Här kan du göra ändringar kursinformationen.</p>
+
             <form method="post">
                 <label for="coursecode">Kurskod:</label>
                 <span class="error">

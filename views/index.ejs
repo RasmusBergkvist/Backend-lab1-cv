@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>CV</title>
 </head>
 
@@ -14,10 +14,26 @@
     </header>
     <main>
         <h2>Kurser</h2>
-        <p>Här visas kurserna som jag har läst</p>
+        <p>Här visas kurserna som jag har läst:</p>
         <div class="courselist">
-            <!-- Här visas kurser som jag lagt till   -->
 
+<!-- Felmeddelande visas om databasen inte kan hämta data   -->            
+        <% if (locals.databaseError) { %>
+        <span class="error"><%= databaseError %></span>
+        <% } %>
+
+        <!-- Felmeddelande visas om kursen inte kunde raderas   -->            
+        <% if (locals.deleteError) { %>
+        <span class="error"><%= deleteError %></span>
+        <% } %>
+
+    
+        <!-- Här visas kurser som finns i databasen   -->
+         <% if(courses.length === 0 && !locals.databaseError) { %>
+            <p>Du har inga kurser inladga. <a add-course href="/add">Lägg till kurs</a></p>
+            
+        <% } else { %>
+        
             <% courses.forEach(course=> {
                 %>
 
@@ -40,6 +56,8 @@
 
 
                 <% }); %>
+
+      <% } %>
         </div>
     </main>
 </body>
