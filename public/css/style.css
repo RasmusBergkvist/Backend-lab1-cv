@@ -199,8 +199,14 @@
     max-width: 65ch;
     margin: 0 auto;
     gap: 1rem;
+ }
 
+ footer {
+   margin-top: auto;
+ }
 
+ footer p {
+   margin-block: 2rem;
  }
 
 
