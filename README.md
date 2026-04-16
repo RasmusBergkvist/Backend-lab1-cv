@@ -4,7 +4,7 @@ I denna uppgift har jag skapat en webbapplikation som är ansluten till en datab
 
 *   **Databasserver:** PostgreSQL
 *   **NPM-paket:** pg, express, ejs, nodemon, dotenv.
-*   **URL till webbplats:** 
+*   **URL till webbplats:** https://dt207g-backend-cv.onrender.com/ 
 
 För att köra applikationen lokalt:
 1. Klona ner repot.
@@ -14,7 +14,7 @@ För att köra applikationen lokalt:
 5. Starta med npm run dev.
 
 ## Installations-skript (Install.js)
-Ansluter till databasen, kör SQL-frågor som skapar tabellerna och samt stänger anslutningen. Här läses även databasinställningarna in från en .env-fil.
+Ansluter till databasen, kör SQL-frågor som skapar tabellerna och samt stänger anslutningen. Här läses även databasinställningarna in från en .env-fil. En export av databasen med testdata finns även tillgänglig i filen db_export.sql.
 
 ## Server.js
 Ansluter till databasen, hämtar Express och startar applikationen. Här finns inställningar för Express som gör att den kan hantera statiska filer via express.static("public") och formulärdata via express.urlencoded({extended: true}).
