@@ -36,6 +36,10 @@
 
  }
 
+ main {
+   flex: 1;
+ }
+
  .logo {
     display: flex;
     justify-content: center;
