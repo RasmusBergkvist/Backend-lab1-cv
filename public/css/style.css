@@ -19,6 +19,7 @@
  body,
  html {
     overflow-x: hidden;
+    height: 100%
  }
 
 
@@ -28,6 +29,7 @@
     width: 100%;
     max-width: 960px;
     min-height: 100vh;
+    min-height: 100dvh;
     margin: 0 auto;
     padding-inline: 3rem;
     background-color: rgb(45, 45, 46);
@@ -218,6 +220,7 @@
        width: 100%;
        padding: 1rem;
        min-height: 100vh;
+       min-height: 100dvh;
     }
 
     .article-links {
