@@ -237,6 +237,7 @@
 
     .mobile-menu-button {
        display: block;
+       position: relative;
        font-size: 2rem;
        margin-right: 1rem;
        width: 50px;
