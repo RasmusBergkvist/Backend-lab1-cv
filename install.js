@@ -38,7 +38,7 @@ async function createTable() {
             coursecode VARCHAR(10) UNIQUE,
             coursename VARCHAR(50),
             syllabus TEXT,
-            progression VARCHAR(5),
+            progression VARCHAR(15),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
             `)

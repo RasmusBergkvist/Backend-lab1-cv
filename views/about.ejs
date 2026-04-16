@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>CV</title>
+</head>
+
+<body>
+    <div class="container">
+        <%- include("partials/header") %>
+            <main>
+                <div class="page-about">
+                    <h2>Om webbplatsen</h2>
+                    <p>Webbplatsen är skapad till en laborationsuppgift i kursen DT207G Backend-baserad webbutveckling.
+                        Uppgiften handlar om serverbaserad webbutveckling där webbplatsen ska vara ansluten
+                        till en databas. Syftet är att lagra och lägga till kurser som presenteras på webbplatsen. Det
+                        ska även gå att redigera och radera kursena.
+                        För att presentera innehållet i databasen används Node.js tillsammans med ramverket Express och
+                        templatemotorn EJS.
+                    </p>
+                    <p>
+                        Att ansluta till en databas gör webbplatsen mer funktionell vilket gör det möjligt att samla in,
+                        hantera och presentera datan för användaren. Här skapas fler möjligheter till validering av
+                        datan
+                        för att få in korrekta uppgifter, samt vilken route användaren ska ledas till vid fel eller en
+                        lyckad lagring. Samtidigt gäller det att tänka på säkerheten genom att förhindra SQL-injektion
+                        där datan tas emot. Detta görs genom att använda parametriserade frågor.
+                    </p>
+                    <p>
+                        Express gör det också enklare att ta emot data från formulär utan att behöva hämta värden med
+                        getElementById eller querySelector.GET och POST möjliggör vad som ska hända, till exempel vilken
+                        vy som ska visas eller vad som sker när formuläret skickas. Tillsammans med EJS kan man
+                        dynamiskt visa data i vyer och även omdirigera användaren till en specifik sida.
+                    </p>
+                </div>
+            </main>
+    </div>
+    <script src="/js/main.js" defer></script>
+</body>
+
+</html>

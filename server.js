@@ -333,7 +333,10 @@ app.get("/delete/:id", async (req, res) => {
     }
 });
 
-
+//Route till Om webbplatsen som renderar vyn About.
+app.get("/about", (req, res) => {
+    res.render("about")
+});
 
 //Lyssnar och startar applikationen på porten
 app.listen(process.env.PORT, () => {

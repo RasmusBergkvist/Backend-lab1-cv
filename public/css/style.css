@@ -16,8 +16,9 @@
     line-height: 1.6;
  }
 
- body, html {
-   overflow-x: hidden;
+ body,
+ html {
+    overflow-x: hidden;
  }
 
 
@@ -28,7 +29,7 @@
     max-width: 960px;
     min-height: 100vh;
     margin: 0 auto;
-    padding-inline: 2rem;
+    padding-inline: 3rem;
     background-color: rgb(45, 45, 46);
     box-shadow: 0 0 8px rgb(45, 45, 45);
 
@@ -46,6 +47,14 @@
     height: 100px;
     width: 100px;
     box-shadow: 0 0 8px rgb(254, 254, 219);
+    text-decoration: none;
+     transition: 0.4s ease;
+    
+ }
+
+ .logo:hover {
+    background-color: rgb(158, 158, 142);
+    color: white;   
  }
 
  .header-container {
@@ -172,8 +181,29 @@
 
  .edit:hover {
     background-color: rgb(121, 132, 177);
-    ;
+
  }
+
+ .add-course {
+    color: rgb(229, 229, 202);
+ }
+
+ .add-course:hover {
+    font-weight: 600;
+ }
+
+ .page-about {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 65ch;
+    margin: 0 auto;
+    gap: 1rem;
+
+
+ }
+
+
 
  @media screen and (max-width: 600px) {
     .container {
@@ -218,7 +248,7 @@
        bottom: 0;
        width: 250px;
        z-index: 990;
-      background-color: rgb(70, 70, 70);
+       background-color: rgb(70, 70, 70);
 
 
        transform: translateX(100%);
@@ -245,6 +275,12 @@
        display: block;
        text-align: left;
 
+    }
+
+
+    .page-about {
+       padding-inline: 1rem;
+       gap: 1.5rem;
     }
 
 
