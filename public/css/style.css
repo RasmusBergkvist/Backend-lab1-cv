@@ -224,6 +224,7 @@
        padding: 1rem;
     }
 
+
     .article-links {
        display: block;
     }
@@ -236,7 +237,6 @@
 
     .mobile-menu-button {
        display: block;
-       position: relative;
        font-size: 2rem;
        margin-right: 1rem;
        width: 50px;
@@ -252,8 +252,8 @@
        display: flex;
        flex-direction: column;
        align-items: center;
-       position: absolute;
-       height: 100vh;
+       position: fixed;
+       min-height: 100vh;
        top: 0;
        right: 0;
        bottom: 0;
